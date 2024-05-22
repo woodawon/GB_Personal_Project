@@ -1,0 +1,36 @@
+* {
+	margin: 0;
+	box-sizing: border-box;
+}
+
+#main {
+	background-color: whitesmoke;
+	width: 80%;
+	text-align: center;
+	border-radius: 20px;
+	margin: auto;
+	margin-top: 180px;
+	padding: 80px 0;
+}
+
+h1 {
+	font-size: 40px;
+}
+
+.btn-outline-danger {
+	color: #333333;
+	border-color: #333333;
+	font-size: large;
+	cursor: pointer;
+}
+
+#box {
+	display: flex;
+	text-align: center;
+	margin: 0 200px;
+}
+
+#btn {
+	margin: 0 auto;
+	
+}
