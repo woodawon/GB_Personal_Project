@@ -18,11 +18,11 @@
 		<section id="main">
 			<h1>Welcome!</h1>
 			<div id="box">
-				<form action="../BeginIT.do" method="post" id="btn">
+				<form action="itQuestion.jsp" method="post" id="btn">
 					<button type="submit" class="btn-outline-danger">IT 인지도
 						체크하기</button>
 				</form>
-				<form action="../BeginPT.do" method="post" id="btn">
+				<form action="psQuestion.jsp" method="post" id="btn">
 					<button type="submit" class="btn-outline-danger">성격 테스트
 						하러가기</button>
 				</form>
