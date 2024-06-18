@@ -13,7 +13,7 @@ $(document).ready(function() {
     function loadNextQuestion() {
         $.ajax({
             type: "POST",
-            url: "NextQuestionServlet",
+            url: "${pageContext.request.contextPath}/NextQuestionServlet",
             data: { index: index },
             dataType: "json",
             success: function(response) {

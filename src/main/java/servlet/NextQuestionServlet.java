@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +35,5 @@ public class NextQuestionServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json.toString());
-		RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/itQuestion.jsp");
-		dispatcher.forward(request, response);
 	}
 }
