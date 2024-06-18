@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject; // json jar파일 추가해서 import함
 
-@WebServlet("/NextQuestionServlet")
-public class NextQuestionServlet extends HttpServlet {
+@WebServlet("/ITQuestionServlet")
+public class ITQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String[] questions = { "컴퓨터의 주요 하드웨어 구성 요소는 무엇입니까?", "이진수의 표현방법을 예를 들어 설명해주세요",
 			"IT 분야에서 가장 흥미로운 직업은 무엇이라고 생각하나요?", "인공지능의 주요 응용 분야는 어떤 것들이 있나요?", "C/C++의 차이를 설명해주세요",

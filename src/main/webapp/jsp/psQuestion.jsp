@@ -1,30 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="./css/qna.css" />
+<link rel="stylesheet" href="../css/qna.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+	var index = sessionStorage.getItem('index') ? parseInt(sessionStorage.getItem('index')) : 0;
+    function loadNextQuestion() {
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.contextPath}/PTQuestionServlet",
+            data: { index: index },
+            dataType: "json",
+            success: function(response) {
+                if (response.question === "모든 질문을 완료했습니다.") {
+                    $("#question").html(response.question);
+                    $("#answerForm").hide();
+                } else {
+                    $("#question").html(response.question);
+                    index = response.index;
+                }
+            }
+        });
+    }
+
+    $("#answerForm").submit(function(event) {
+        event.preventDefault();
+        loadNextQuestion();
+    });
+
+    loadNextQuestion();
+});
+</script>
 </head>
 <body>
-	<div class="container">
-		<section id="main">
-			<c:choose>
-                <c:when test="${not empty sessionScope.psDB and sessionScope.currentIndex < sessionScope.psDB.size()}">
-                    <c:set var="vo" value="${sessionScope.psDB[sessionScope.currentIndex]}" />
-                    <h3>${vo.question}</h3>
-                    <form action="NextQuestion.do" method="post">
-                        <input type="text" name="answer" />
-                        <button type="submit">다음 질문</button>
-                    </form>
-                </c:when>
-                <c:otherwise>
-                    <h3>모든 질문을 완료했습니다.</h3>
-                </c:otherwise>
-            </c:choose>
-		</section>
-	</div>
+    <div class="container">
+        <section id="main">
+            <h3 id="question"></h3>
+            <form id="answerForm">
+                <input type="text" name="answer" />
+                <button type="submit">다음 질문</button>
+            </form>
+        </section>
+    </div>
 </body>
 </html>
