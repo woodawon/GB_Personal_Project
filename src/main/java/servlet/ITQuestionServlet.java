@@ -23,8 +23,9 @@ public class ITQuestionServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String answer = request.getParameter("answer");
+		int index = Integer.parseInt(request.getParameter("index"));
 		try {
-			String answer = request.getParameter("answer");
 			GBDAO dao = GBDAO.getInstance();
 			int result = dao.set_itDB(answer);
 			HttpSession session = request.getSession();
@@ -32,14 +33,15 @@ public class ITQuestionServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		int index = Integer.parseInt(request.getParameter("index"));
 		JSONObject json = new JSONObject();
 		if (index < questions.length) {
 			json.put("question", questions[index]);
 			json.put("index", index + 1);
+			json.put("answer", answer);
 		} else {
 			json.put("question", "모든 질문을 완료했습니다.");
 			json.put("index", index);
+			json.put("answer", "");
 		}
 
 		response.setContentType("application/json");

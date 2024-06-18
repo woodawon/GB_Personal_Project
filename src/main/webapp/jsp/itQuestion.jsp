@@ -10,11 +10,12 @@
 <script>
 $(document).ready(function() {
 	var index = sessionStorage.getItem('index') ? parseInt(sessionStorage.getItem('index')) : 0;
-    function loadNextQuestion() {
+    var answer = $("#answerForm input[name='answer']").val();
+	function loadNextQuestion() {
         $.ajax({
             type: "POST",
             url: "${pageContext.request.contextPath}/ITQuestionServlet",
-            data: { index: index },
+            data: { index: index, answer: answer },
             dataType: "json",
             success: function(response) {
                 if (response.question === "모든 질문을 완료했습니다.") {
@@ -24,6 +25,7 @@ $(document).ready(function() {
                 } else {
                     $("#question").html(response.question);
                     index = response.index;
+                    answer = response.answer;
                 }
             }
         });
