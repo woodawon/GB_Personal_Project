@@ -70,7 +70,7 @@ public class GBDAO {
 		ResultSet rs = null;
 		int result = 0;
 		try {
-			String sql = "delete from itDB, psDB";
+			String sql = "delete from itDB";
 			con = getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);

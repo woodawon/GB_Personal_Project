@@ -23,16 +23,6 @@ public class ITQuestionServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int index = Integer.parseInt(request.getParameter("index"));
-		JSONObject json = new JSONObject();
-		if (index < questions.length) {
-			json.put("question", questions[index]);
-			json.put("index", index + 1);
-		} else {
-			json.put("question", "모든 질문을 완료했습니다.");
-			json.put("index", index);
-		}
-		
 		try {
 			String answer = request.getParameter("answer");
 			GBDAO dao = GBDAO.getInstance();
@@ -41,6 +31,15 @@ public class ITQuestionServlet extends HttpServlet {
 			session.setAttribute("check", result); // 테스트 코드
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		int index = Integer.parseInt(request.getParameter("index"));
+		JSONObject json = new JSONObject();
+		if (index < questions.length) {
+			json.put("question", questions[index]);
+			json.put("index", index + 1);
+		} else {
+			json.put("question", "모든 질문을 완료했습니다.");
+			json.put("index", index);
 		}
 
 		response.setContentType("application/json");

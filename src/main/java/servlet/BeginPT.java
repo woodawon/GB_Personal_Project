@@ -25,9 +25,9 @@ public class BeginPT extends HttpServlet {
 		String url = "jsp/psQuestion.jsp";
 		try {
 			GBDAO dao = GBDAO.getInstance();
-			ArrayList<psVO> db = dao.get_psDB();
+			// ArrayList<psVO> db = dao.get_psDB();
 			HttpSession session = request.getSession();
-			session.setAttribute("psDB", db);
+			// session.setAttribute("psDB", db);
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
