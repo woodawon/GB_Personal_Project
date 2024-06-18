@@ -20,6 +20,7 @@ $(document).ready(function() {
                 if (response.question === "모든 질문을 완료했습니다.") {
                     $("#question").html(response.question);
                     $("#answerForm").hide();
+                    
                 } else {
                     $("#question").html(response.question);
                     index = response.index;

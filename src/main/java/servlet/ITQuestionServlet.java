@@ -1,12 +1,13 @@
 package servlet;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.GBDAO;
 import org.json.JSONObject; // json jar파일 추가해서 import함
 
 @WebServlet("/ITQuestionServlet")
@@ -30,6 +31,16 @@ public class ITQuestionServlet extends HttpServlet {
 		} else {
 			json.put("question", "모든 질문을 완료했습니다.");
 			json.put("index", index);
+		}
+		
+		try {
+			String answer = request.getParameter("answer");
+			GBDAO dao = GBDAO.getInstance();
+			int result = dao.set_itDB(answer);
+			HttpSession session = request.getSession();
+			session.setAttribute("check", result); // 테스트 코드
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		response.setContentType("application/json");

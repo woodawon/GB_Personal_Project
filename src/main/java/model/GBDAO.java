@@ -12,15 +12,15 @@ import java.util.List;
 
 public class GBDAO {
 	private GBDAO() {
-		
+
 	}
-	
+
 	private static GBDAO instance = new GBDAO();
-	
+
 	public static GBDAO getInstance() throws SQLException {
 		return instance;
 	}
-	
+
 	public Connection getConnection() throws IOException, SQLException, ClassNotFoundException {
 		Class.forName("oracle.jdbc.OracleDriver");
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -29,77 +29,72 @@ public class GBDAO {
 		Connection con = DriverManager.getConnection(url, id, pw);
 		return con;
 	}
-	
-	public ArrayList<itVO> get_itDB() {
-		ArrayList<itVO> list = new ArrayList<>();
+
+	public int set_itDB(String answer) {
 		Connection con = null;
-		Statement stmt = null;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		int result = 0;
 		try {
-			String sql = "select * from itDB";
+			String sql = "insert into itDB values (default, ?)";
 			con = getConnection();
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
-				itVO vo = new itVO();
-				vo.setQuestion(rs.getString("question"));
-				vo.setAnswer(rs.getString("answer"));
-				list.add(vo);
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, answer);
+			rs = psmt.executeQuery();
+			if (rs != null) {
+				result = 1;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(con != null) {
+				if (con != null) {
 					con.close();
 				}
-				if(stmt != null) {
-					stmt.close();
+				if (psmt != null) {
+					psmt.close();
 				}
-				if(rs != null) {
+				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return list;
+		return result;
 	}
-	
-	public ArrayList<psVO> get_psDB() {
-		ArrayList<psVO> list = new ArrayList<>();
+
+	public int reset_DB() {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		int result = 0;
 		try {
-			String sql = "select * from psDB";
+			String sql = "delete from itDB, psDB";
 			con = getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
-				psVO vo = new psVO();
-				vo.setQuestion(rs.getString("question"));
-				vo.setAnswer(rs.getInt("answer"));
-				list.add(vo);
+			if (rs != null) {
+				result = 1;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(con != null) {
+				if (con != null) {
 					con.close();
 				}
-				if(stmt != null) {
+				if (stmt != null) {
 					stmt.close();
 				}
-				if(rs != null) {
+				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return list;
+		return result;
 	}
-	
+
 }
