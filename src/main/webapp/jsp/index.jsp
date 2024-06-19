@@ -27,11 +27,6 @@
 						하러가기</button>
 				</form>
 			</div>
-			<form action="DeleteDB.do" method="post" id="btn">
-				<button type="button" class="btn-outline-danger">
-				DB 초기화
-				</button>
-			</form>
 		</section>
 	</div>
 </body>

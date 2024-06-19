@@ -30,16 +30,17 @@ public class GBDAO {
 		return con;
 	}
 
-	public int set_itDB(String answer) {
+	public int set_itDB(int idx, String answer) {
 		Connection con = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		int result = 0;
 		try {
-			String sql = "insert into itDB values (default, ?)";
+			String sql = "insert into itDB values (?, ?)";
 			con = getConnection();
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, answer);
+			psmt.setInt(1, idx);
+			psmt.setString(2, answer);
 			rs = psmt.executeQuery();
 			if (rs != null) {
 				result = 1;
@@ -53,39 +54,6 @@ public class GBDAO {
 				}
 				if (psmt != null) {
 					psmt.close();
-				}
-				if (rs != null) {
-					rs.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}
-
-	public int reset_DB() {
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		int result = 0;
-		try {
-			String sql = "delete from itDB";
-			con = getConnection();
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
-			if (rs != null) {
-				result = 1;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-				if (stmt != null) {
-					stmt.close();
 				}
 				if (rs != null) {
 					rs.close();
