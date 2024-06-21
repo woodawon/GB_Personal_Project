@@ -16,6 +16,7 @@ public class GBDAO {
 	}
 
 	private static GBDAO instance = new GBDAO();
+	private Connection con;
 
 	public static GBDAO getInstance() throws SQLException {
 		return instance;
@@ -31,7 +32,7 @@ public class GBDAO {
 	}
 
 	public int set_itDB(int idx, String answer) {
-		Connection con = null;
+		con = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		int result = 0;
@@ -63,6 +64,42 @@ public class GBDAO {
 			}
 		}
 		return result;
+	}
+	
+	
+	public List<itVO> get_itDB() {
+		List<itVO> list = new ArrayList<itVO>();
+		con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from itDB";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				itVO vo = new itVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setAnswer(rs.getString("answer"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 }

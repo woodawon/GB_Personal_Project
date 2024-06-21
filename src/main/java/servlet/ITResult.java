@@ -1,10 +1,15 @@
 package servlet;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.GBDAO;
+import model.itVO;
 
 @WebServlet("/ITResult")
 public class ITResult extends HttpServlet {
@@ -28,7 +34,18 @@ public class ITResult extends HttpServlet {
         String receivedValue = "";
         
         try {
+        	// DB에서 answer texts 받아오기
+        	File file = new File("C:\\Users\\teacher-pc\\texts\\answer.txt");
+        	if(!file.exists()) {
+        		file.createNewFile();
+        	}
+        	FileWriter fw = new FileWriter(file);
+        	BufferedWriter bw = new BufferedWriter(fw);
+        	
         	GBDAO dao = GBDAO.getInstance();
+        	List<itVO> list = dao.get_itDB();
+        	
+        	
 			
 		} catch (Exception e) {
 			e.printStackTrace();

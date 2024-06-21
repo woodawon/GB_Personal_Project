@@ -1,21 +1,23 @@
 package model;
 
 public class itVO {
-	
-	private String question;
+
+	private int idx;
 	private String answer;
-	
-	public String getQuestion() {
-		return question;
+
+	public int getIdx() {
+		return idx;
 	}
-	public void setQuestion(String question) {
-		this.question = question;
+
+	public void setIdx(int idx) {
+		this.idx = idx;
 	}
+
 	public String getAnswer() {
 		return answer;
 	}
+
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	
 }
