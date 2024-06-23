@@ -48,20 +48,21 @@ public class ITResult extends HttpServlet {
         	for(int i = 0; i < list.size(); i++) {
         		bw.write(list.get(i).getAnswer());
         	}
+        	bw.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-             PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+             PrintWriter ow = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader bf = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
     
             // 서버에 메시지 전송
-            outputWriter.println(messageToSend);
+        	ow.println(messageToSend);
 
             // 서버로부터의 응답 받기
-            receivedValue = inputReader.readLine();
+            receivedValue = bf.readLine();
 
         } catch (IOException e) {
             e.printStackTrace();
