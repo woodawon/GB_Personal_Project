@@ -45,7 +45,9 @@ public class ITResult extends HttpServlet {
         	GBDAO dao = GBDAO.getInstance();
         	List<itVO> list = dao.get_itDB();
         	
-        	
+        	for(int i = 0; i < list.size(); i++) {
+        		bw.write(list.get(i).getAnswer());
+        	}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
