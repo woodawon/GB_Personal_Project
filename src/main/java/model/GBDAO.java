@@ -101,5 +101,40 @@ public class GBDAO {
 		}
 		return list;
 	}
+	
+	public int set_psDB(int idx, int answer) {
+		con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			String sql = "insert into psDB values (?, ?)";
+			con = getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, idx);
+			psmt.setInt(2, answer);
+			rs = psmt.executeQuery();
+			if (rs != null) {
+				result = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 }

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject; // json jar파일 추가해서 import함
 
+import model.GBDAO;
+
 @WebServlet("/PTQuestionServlet")
 public class PTQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +24,16 @@ public class PTQuestionServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		int answer = Integer.parseInt(request.getParameter("answer"));
 		int index = Integer.parseInt(request.getParameter("index"));
+		
+		try {
+			GBDAO dao = GBDAO.getInstance();
+			dao.set_psDB(index, answer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		JSONObject json = new JSONObject();
 		if (index < questions.length) {
 			json.put("question", questions[index]);
