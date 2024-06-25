@@ -12,7 +12,12 @@ $(document).ready(function() {
     var index = sessionStorage.getItem('index') ? parseInt(sessionStorage.getItem('index')) : 0;
 
     function loadNextQuestion() {
-        var answer = $("#answerForm input[name='answer']").val();
+        var answer = $("#answerForm input[name='answer']:checked").val();
+        if (!answer) {
+            alert("답변을 선택해주세요.");
+            return;
+        }
+        console.log("Submitting answer: " + answer + " with index: " + index);  // 로그 추가
         $.ajax({
             type: "POST",
             url: "${pageContext.request.contextPath}/PTQuestionServlet",
@@ -26,7 +31,7 @@ $(document).ready(function() {
                         text: '결과 확인하러 가기', 
                         id: 'nbtn',
                         click: function() { 
-                        	window.location.href = "${pageContext.request.contextPath}/PTResult";
+                            window.location.href = "${pageContext.request.contextPath}/PTResult";
                         }
                     });
                     $('#answerForm').append(nbtn);
@@ -35,7 +40,10 @@ $(document).ready(function() {
                     index = response.index;
                     sessionStorage.setItem('index', index);  // index 값을 세션 스토리지에 저장합니다.
                 }
-                $("#answerForm input[name='answer']").val('');  // 폼 초기화
+                $("#answerForm input[name='answer']").prop('checked', false);  // 폼 초기화
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error: " + status + " - " + error);  // 에러 로그 추가
             }
         });
     }
